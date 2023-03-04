@@ -1,7 +1,7 @@
 function login(e) {
     //Para ejecucion
     e.preventDefault();
-    console.log("kmi boba")
+    console.log("a")
 
     //Para datos
     let inputUser = document.getElementById("usuario").value
