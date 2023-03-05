@@ -78,13 +78,12 @@
                                 <th scope="col">Nombres</th>
                                 <th scope="col">Apellidos</th>
                                 <th scope="col">Direccion</th>
-                                <th scope="col">ID</th>
                                 <th scope="col">Telefono</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Contraseña</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="data"> 
                         </tbody>
                     </table>
                 </div>
@@ -101,7 +100,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script></script>
+    <script>
+ 
+    fetch("http://89.116.25.43:3000/api/usuarios/listar",{})
+    .then(response => response.json())
+    .then(data => mostrarData(data.usuarios))
+
+      const mostrarData = (data) => {
+        let body = ''
+        for (let i = 0; i < data.length; i++) {
+        body += `<tr><td>${data[i].usuario}</td><td>${data[i].nombres}</td><td>${data[i].apellidos}</td><td>${data[i].direccion}</td>
+          <td>${data[i].telefono}</td><td>${data[i].email}</td><td>${data[i].password}</td><tr>`
+        }
+        document.getElementById('data').innerHTML = body
+      }
+
+    </script>
 
 </body>
 

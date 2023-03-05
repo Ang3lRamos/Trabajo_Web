@@ -29,11 +29,11 @@ function login(e) {
     .then(redirect => location.href = "dashboard.html")
 }
 
-function verDatos() {
-    fetch("http://89.116.25.43:3000/api/usuarios/listar",{
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-}
+// function verDatos() {
+//     fetch("http://89.116.25.43:3000/api/usuarios/listar",{
+//     })
+//     .then(response => response.json())
+//     .then(data => console.log(data))
+// }
 
-verDatos()
+// verDatos()
