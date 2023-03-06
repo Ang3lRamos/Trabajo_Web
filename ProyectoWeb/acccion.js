@@ -1,7 +1,7 @@
 function login(e) {
     //Para ejecucion
     e.preventDefault();
-    console.log("a")
+
 
     //Para datos
     let inputUser = document.getElementById("usuario").value
@@ -22,12 +22,21 @@ function login(e) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        console.log('data',data);
         sessionStorage.setItem("token",data["jwt"])
         sessionStorage.setItem("user",JSON.stringify(data.user))
+
+        if(data.status === 200){
+            location.href = "dashboard.html"
+        }else if(data.status === 403){
+            alert("No tiene permisos para ingresar")
+        }else{
+            alert("Ha ocurrido un error inesperado")
+        }
     })
-    .then(redirect => location.href = "dashboard.html")
 }
+
+
 
 // function verDatos() {
 //     fetch("http://89.116.25.43:3000/api/usuarios/listar",{
