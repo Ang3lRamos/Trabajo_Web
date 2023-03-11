@@ -60,11 +60,17 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="login.html">Sign off</a>
+              <button type="button" class="btn btn-default">Sign off</button>
             </li>
           </ul>
         </div>
       </nav>
+
+      <div class="row">
+        <div class="col-md-5 offset-md-2">
+          <button onclick="registrar(event)" type="submit" class="btn btn-dark mt-3">Add</button>
+        </div>
+      </div>
 
     <div class="container">
         <div class="row mt-3">
@@ -80,7 +86,6 @@
                                 <th scope="col">Direccion</th>
                                 <th scope="col">Telefono</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Contraseña</th>
                             </tr>
                         </thead>
                         <tbody id="data"> 
@@ -110,13 +115,12 @@
         let body = ''
         for (let i = 0; i < data.length; i++) {
         body += `<tr><td>${data[i].usuario}</td><td>${data[i].nombres}</td><td>${data[i].apellidos}</td><td>${data[i].direccion}</td>
-          <td>${data[i].telefono}</td><td>${data[i].email}</td><td>${data[i].password}</td><tr>`
+          <td>${data[i].telefono}</td><td>${data[i].email}</td><tr>`
         }
         document.getElementById('data').innerHTML = body
       }
-
     </script>
-
+    <script src = "accion.js"></script>
 </body>
 
 </html>
