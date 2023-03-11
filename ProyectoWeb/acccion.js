@@ -73,7 +73,7 @@ function registrar(e) {
     let inputUsername = document.getElementById("usuario").value;
     let inputPassword = document.getElementById("pass").value;
 
-    fetch("",{
+    fetch("http://89.116.25.43:3000/api/usuarios/registrar",{
         method: "POST",
         body: JSON.stringify({
             nombres: inputNombre,
