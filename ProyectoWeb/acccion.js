@@ -1,3 +1,30 @@
+const contenedor = document.querySelector('tbody')
+let resultados = ''
+
+const modalUsuario = new bootstrap.Modal(document.getElementById('modalUsuario'))
+const formUsuario = document.querySelector('form')
+
+const usuario = document.getElementById('usuario')
+const nombre = document.getElementById('nombre')
+const apellido = document.getElementById('apellido')
+const direccion = document.getElementById('direccion')
+const telefono = document.getElementById('telefono')
+const email = document.getElementById('email')
+const password = document.getElementById('password')
+
+
+btnCrear.addEventListener('click', ()=>{
+    usuario.value = ''
+    nombre.value = ''
+    apellido.value = ''
+    direccion.value = ''
+    telefono.value = ''
+    email.value = ''
+    password.value = ''
+    modalUsuario.show()
+    opcion = 'crear'
+})
+
 function logout(){
     sessionStorage.clear();
     location.href("login.html");
@@ -21,6 +48,29 @@ function defName(){
     let userName = `<h5>`+user.usuario.toUpperCase()+`</h5>`;
     $("#content-username").append(userName);
 }
+
+const mostrar = (usuarios) => {
+    usuarios.forEach(usuario => {
+        resultados += `<tr>
+                            <td>${usuario.usuario}</td>
+                            <td>${usuario.nombres}</td>
+                            <td>${usuario.apellidos}</td>
+                            <td>${usuario.direccion}</td>
+                            <td>${usuario.telefono}</td>
+                            <td>${usuario.email}</td>
+                       </tr>
+                    `    
+    })
+    contenedor.innerHTML = resultados
+    
+}
+
+fetch("http://89.116.25.43:3000/api/usuarios/listar")
+    .then( response => response.json() )
+    .then( data => mostrar(data.usuarios) )
+    .catch( error => console.log(error))
+
+
 function login(e) {
     //Para ejecucion
     e.preventDefault();
@@ -60,42 +110,34 @@ function login(e) {
     })
 }
 
-function registrar(e) {
-    //Para ejecucion
-    e.preventDefault();
+formUsuario.addEventListener('submit', (e)=>{
+    console.log("ingresa por aca");
+    e.preventDefault()
+    if(opcion=='crear'){        
+        console.log('OPCION CREAR')
+        fetch("http://89.116.25.43:3000/api/usuarios/registrar", {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                nombres: usuario.value,
+                apellidos: apellido.value,
+                telefono: telefono.value,
+                email: email.value,
+                direccion: direccion.value,
+                usuario: usuario.value,
+                password: password.value,
+            })
+        })
+        .then( response => verDatos())
+    }
+    modalUsuario.hide()
+})
 
-    //Para datos
-    let inputNombre = document.getElementById("nombres").value;
-    let inputApellidos = document.getElementById("apellidos").value;
-    let inputTelefono = document.getElementById("telefono").value;
-    let inputDireccion = document.getElementById("direccion").value;
-    let inputEmail = document.getElementById("email").value;
-    let inputUsername = document.getElementById("usuario").value;
-    let inputPassword = document.getElementById("pass").value;
-
-    fetch("http://89.116.25.43:3000/api/usuarios/registrar",{
-        method: "POST",
-        body: JSON.stringify({
-            nombres: inputNombre,
-            apellidos: inputApellidos,
-            telefono: inputTelefono,
-            email: inputEmail,
-            direccion: inputDireccion,
-            usuario: inputUsername,
-            password: inputPassword
-        }),
-        headers: {
-            "Content-type": "application/json"
-        },
-    })
-    .then(response => location.href = "dashboard.html")
-}
-
-// function verDatos() {
-//     fetch("http://89.116.25.43:3000/api/usuarios/listar",{
-//     })
-//     .then(response => response.json())
-//     .then(data => console.log(data))
-// }
-
-// verDatos()
+ function verDatos() {
+     fetch("http://89.116.25.43:3000/api/usuarios/listar")
+     .then( response => response.json() )
+     .then( data => mostrar(data.usuarios) )
+     .catch( error => console.log(error))
+ }
